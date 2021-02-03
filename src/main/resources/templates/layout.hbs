@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{#block "title"}}Blog{{/block}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href='/app.css'>
+</head>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-top">
+            Bootstrap
+        </a>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col" id="main-menu">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" aria-selected="{{activeLink}}">
+                <a class="nav-link" id="v-pills-profile-tab" href="/departments" aria-selected="{{activeLink}}" role="tab">Departments</a>
+                <a class="nav-link" id="v-pills-profile-tab"  href="/staff" aria-selected="{{activeLink}}" role="tab">Staff</a>
+                <a class="nav-link" id="v-pills-messages-tab" href="/roles" role="tab" aria-controls="v-pills-messages" aria-selected="{{activeLink}}">Roles</a>
+                <a class="nav-link" id="v-pills-settings-tab" href="/responsibilities" role="tab" aria-controls="v-pills-settings" aria-selected="{{activeLink}}">Responsibilities</a>
+            </div>
+        </div>
+        <div class="col-8" id="display-screen">
+
+            {{#block "content"}}
+
+
+            {{/block}}
+
+        </div>
+
+    </div>
+</div>
+</div>
+<!--end main template-->
+{{#block "footer"}}
+    <footer class="footer">
+        <div class="container">
+
+        </div>
+    </footer>
+    </body>
+
+    </html>
+{{/block}}
