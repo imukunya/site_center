@@ -1,0 +1,66 @@
+{{#partial "content"}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8" id="content-panel">
+                {{#each engineers}}
+                    <div class="table-responsive table-bordered">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>{{eng_id}}</td>
+                                <td>{{eng_names}}</td>
+                                <td>
+                                    <a href="/engineer/{{eng_id}}/edit">Edit</a> | <a href="/engineer/{{eng_id}}/delete">Delete</a>
+
+                                </td>
+
+
+
+                                <!--                                -->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="col" id="forms-container">
+
+                {{#if createEngineerFormView}}
+                    <form action="/engineer/add" method="post">
+                        <div class="mb-3">
+                            <label for="engineerNames" class="form-label">Engineer Names</label>
+                            <input type="text" class="form-control" name="engineerNames" id="engineerNames" aria-describedby="Engineer Names">
+                            <div id="emailHelp" class="form-text">Please add an Engineer.</div>
+
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-primary">Add Engineer</button>
+
+                    </form>
+                    <div class="" id="user-feeback">
+                        {{#if createdEngineerFeedback}}
+                            <div id="emailHelp" class="form-text text-success">Added Engineer: {{engNames}}</div>
+
+                        {{/if}}
+
+
+
+                    </div>
+                {{/if}}
+
+
+
+
+            </div>
+<!--            end of form tempplates-->
+
+            </div>
+        </div>
+    </div>
+{{/partial}}
+
+{{> layout.hbs}}

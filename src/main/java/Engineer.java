@@ -77,6 +77,21 @@ public class Engineer implements DatabaseManagement {
         }
     }
 
+    public int getEng_id() {
+        return eng_id;
+    }
+
+    public void setEng_id(int eng_id) {
+        this.eng_id = eng_id;
+    }
+
+    public String getEng_names() {
+        return eng_names;
+    }
+
+    public void setEng_names(String eng_names) {
+        this.eng_names = eng_names;
+    }
 
     @Override
     public boolean equals(Object o) {
