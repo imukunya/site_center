@@ -53,8 +53,11 @@
                         <div class="mb-3">
                             <label for="siteEngineer" class="form-label">Add site engineer</label>
                             <select class="form-select" name="siteEngineer" id="siteEngineer" aria-describedby="Site Engineer">
-                                {{#each siteEngineer}}
-                                    <option value="{{siteEngineer.eng_id}}">{{siteEngineer.eng_names}}</option>
+                                <option value="0">choose an engineer</option>
+                                {{#each siteEngineers}}
+
+
+                                    <option value="{{eng_id}}">{{eng_names}}</option>
                                 {{/each}}
                             </select>
                         </div>

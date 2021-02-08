@@ -140,40 +140,49 @@ public class App {
         /**
          * sites
          */
-        get("/sites",(req,res) -> {
+        get("/site",(req,res) -> {
             Map<String,Object> model  = new HashMap<>();
             List<Site> sites = Site.all();
             model.put("sites",sites);
+
+            List<Engineer> engineers = Engineer.all();
+            model.put("siteEngineers",engineers);
+
+
             model.put("createSiteFormView",true);
             model.put("createdSiteFeedback",false);
             return new ModelAndView(model,"site.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/sites/add",(req,res) -> {
+        post("/site/add",(req,res) -> {
             Map<String,Object> model  = new HashMap<>();
             List<Site> sites = Site.all();
             model.put("sites",sites);
+
+            List<Engineer> engineers = Engineer.all();
+            model.put("siteEngineers",engineers);
 
             String siteNames = req.queryParams("siteNames");
             String siteLocation = req.queryParams("siteLocation");
             String siteNotes = req.queryParams("siteNotes");
             String siteEngineer = req.queryParams("siteEngineer");
 
-            Site site  =new Site(siteNames);
+            Site site  =new Site(siteNames,siteLocation);
             site.save();
 
             //save the engineer site references
-            site.saveSiteEngineer(site.site_id, Integer.parseInt(siteEngineer));
+            site.saveSiteEngineer(String.valueOf(site.site_id), siteEngineer);
 
             //save site notes
+            site.saveSiteNotes(siteNotes,site.site_id);
 
 
 
             model.put("createSiteFormView",true);
             model.put("createdSiteFeedback",true);
-            model.put("engNames",siteNames);
+            model.put("sitename",siteNames);
 
-            return new ModelAndView(model,"engineer.hbs");
+            return new ModelAndView(model,"site.hbs");
         }, new HandlebarsTemplateEngine());
 
 

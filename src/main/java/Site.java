@@ -1,22 +1,27 @@
 import org.sql2o.Connection;
+import org.sql2o.Sql2oException;
 
 import java.util.List;
-
+import java.util.Objects;
 public  class Site implements DatabaseManagement{
     int site_id;
     String  site_name;
+    String site_location;
 
 
-    public Site(String site_name) {
+    public Site(String site_name,String site_location) {
+
         this.site_name = site_name;
+        this.site_location = site_location;
     }
 
     @Override
     public void save() {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO sites(site_name) VALUES(:site_name)";
+            String sql = "INSERT INTO sites(site_name,site_location) VALUES(:site_name,:site_location)";
             this.site_id = (int) con.createQuery(sql, true)
                     .addParameter("site_name", this.site_name)
+                    .addParameter("site_location", this.site_location)
                     .executeUpdate()
                     .getKey();
         }
@@ -77,10 +82,10 @@ public  class Site implements DatabaseManagement{
         }
     }
 
-    public void saveSiteEngineer(int site_id,int eng_id){
+    public void saveSiteEngineer(String site_id,String eng_id){
         try(Connection con = DB.sql2o.open()) {
-            String sql = "INSERT INTO engineers_sites(site_id,eng_id) VALUES(:site_id,eng_id)";
-            int engSite_id = (int) con.createQuery(sql, true)
+            String sql = "INSERT INTO engineers_sites(site_id,eng_id) VALUES(:site_id,:eng_id)";
+             con.createQuery(sql, true)
                     .addParameter("site_id", site_id)
                     .addParameter("eng_id", eng_id)
                     .executeUpdate()
@@ -93,6 +98,27 @@ public  class Site implements DatabaseManagement{
         n.save();
     }
 
+    public int getSite_id() {
+        return site_id;
+    }
 
+    public void setSite_id(int site_id) {
+        this.site_id = site_id;
+    }
 
+    public String getSite_name() {
+        return site_name;
+    }
+
+    public void setSite_name(String site_name) {
+        this.site_name = site_name;
+    }
+
+    public String getSite_location() {
+        return site_location;
+    }
+
+    public void setSite_location(String site_location) {
+        this.site_location = site_location;
+    }
 }
