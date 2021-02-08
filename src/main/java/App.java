@@ -137,6 +137,45 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
 
+        /**
+         * sites
+         */
+        get("/sites",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Site> sites = Site.all();
+            model.put("sites",sites);
+            model.put("createSiteFormView",true);
+            model.put("createdSiteFeedback",false);
+            return new ModelAndView(model,"site.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/sites/add",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Site> sites = Site.all();
+            model.put("sites",sites);
+
+            String siteNames = req.queryParams("siteNames");
+            String siteLocation = req.queryParams("siteLocation");
+            String siteNotes = req.queryParams("siteNotes");
+            String siteEngineer = req.queryParams("siteEngineer");
+
+            Site site  =new Site(siteNames);
+            site.save();
+
+            //save the engineer site references
+            site.saveSiteEngineer(site.site_id, Integer.parseInt(siteEngineer));
+
+            //save site notes
+
+
+
+            model.put("createSiteFormView",true);
+            model.put("createdSiteFeedback",true);
+            model.put("engNames",siteNames);
+
+            return new ModelAndView(model,"engineer.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
     }
 }

@@ -2,9 +2,10 @@ import org.sql2o.Connection;
 
 import java.util.List;
 
-public abstract class Site implements DatabaseManagement{
+public  class Site implements DatabaseManagement{
     int site_id;
     String  site_name;
+
 
     public Site(String site_name) {
         this.site_name = site_name;
@@ -19,6 +20,8 @@ public abstract class Site implements DatabaseManagement{
                     .executeUpdate()
                     .getKey();
         }
+
+
     }
 
     @Override
@@ -73,6 +76,23 @@ public abstract class Site implements DatabaseManagement{
             return con.createQuery(sql).executeAndFetch(Site.class);
         }
     }
+
+    public void saveSiteEngineer(int site_id,int eng_id){
+        try(Connection con = DB.sql2o.open()) {
+            String sql = "INSERT INTO engineers_sites(site_id,eng_id) VALUES(:site_id,eng_id)";
+            int engSite_id = (int) con.createQuery(sql, true)
+                    .addParameter("site_id", site_id)
+                    .addParameter("eng_id", eng_id)
+                    .executeUpdate()
+                    .getKey();
+        }
+    }
+
+    public void saveSiteNotes(String note, int site_id){
+        Note n = new Note(note,site_id);
+        n.save();
+    }
+
 
 
 }

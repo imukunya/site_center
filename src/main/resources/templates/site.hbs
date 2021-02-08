@@ -1,0 +1,171 @@
+{{#partial "content"}}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8" id="content-panel">
+                {{#each sites}}
+                    <div class="table-responsive table-bordered">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>{{site_id}}</td>
+                                <td>{{site_name}}</td>
+                                <td>
+                                    <a href="/site/edit/{{site_id}}">Edit</a> | <a href="/site/delete/{{site_id}}">Delete</a>
+
+                                </td>
+
+
+
+                                <!--                                -->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {{/each}}
+            </div>
+
+            <div class="col" id="forms-container">
+
+                {{#if createSiteFormView}}
+                    <form action="/site/add" method="post">
+                        <div class="mb-3">
+                            <label for="siteNames" class="form-label">Site Names</label>
+                            <input type="text" class="form-control" name="siteNames" id="siteNames" aria-describedby="Site Name">
+                            <div id="emailHelp" class="form-text">Please add an Site Name.</div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="siteLocation" class="form-label">Site Location</label>
+                            <input type="text" class="form-control" name="siteLocation" id="siteLocation" aria-describedby="Site Location">
+                            <div id="emailHelp" class="form-text">Please add an Site location.</div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="siteNotes" class="form-label">Site Notes</label>
+                            <textarea class="form-control" name="siteNotes" id="siteNotes" aria-describedby="Site Notes"></textarea>
+                            <div id="emailHelp" class="form-text">Please add Site notes.</div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="siteEngineer" class="form-label">Add site engineer</label>
+                            <select class="form-select" name="siteEngineer" id="siteEngineer" aria-describedby="Site Engineer">
+                                {{#each siteEngineer}}
+                                    <option value="{{siteEngineer.eng_id}}">{{siteEngineer.eng_names}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-primary">Add Engineer</button>
+
+                    </form>
+                    <div class="" id="user-feeback">
+                        {{#if createdSiteFeedback}}
+                            <div id="emailHelp" class="form-text text-success">Added site: {{sitename}}</div>
+
+                        {{/if}}
+
+
+
+                    </div>
+                {{/if}}
+
+                {{#if editEngineerFormView}}
+                    <form action="/engineer/update" method="post">
+                        <div class="mb-3">
+                            <label for="engineerNames" class="form-label">Engineer Names</label>
+                            <input type="text" class="form-control" name="engineerNames" id="engineerNames" value="{{editEngineer.eng_names}}" aria-describedby="Engineer Names">
+                            <input type="text" readonly class="form-control" name="eng_id" value="{{editEngineer.eng_id}}">
+                            <div id="emailHelp" class="form-text">Please add an Engineer.</div>
+
+                        </div>
+
+
+
+                        <button type="submit" class="btn btn-success">Update Engineer</button>
+
+                    </form>
+                    <div class="" id="user-feeback">
+                        {{#if editEngineerFeedback}}
+                            <div id="emailHelp" class="form-text text-success">Updated Engineer successfully</div>
+
+                        {{/if}}
+
+
+
+                    </div>
+                {{/if}}
+
+                {{#if deleteEngineerConfirm}}
+                <div class="modal" id="myModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="myModal">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Engineer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="/engineer/delete" method="post">
+                                <div class="modal-body">
+                                    <p>delete:{{deleteEngineer.eng_names}} ?</p>
+                                    <input type="hidden" name="eng_id" value="{{deleteEngineer.eng_id}}" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                    <script>
+                            var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                            myModal.show();
+                        </script>
+                {{/if}}
+
+                {{#if deleteEngineerFeedback}}
+                <div class="modal" id="myModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content" id="myModal">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Engineer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                {{deleteEngineerFeedbackMSG}}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <script>
+                            var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                            myModal.show();
+                        </script>
+                {{/if}}
+
+
+
+
+            </div>
+                <!--            end of form tempplates-->
+
+            </div>
+            </div>
+        </div>
+{{/partial}}
+
+{{> layout.hbs}}
