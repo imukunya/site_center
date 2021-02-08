@@ -2,7 +2,7 @@ import org.sql2o.Connection;
 
 import java.util.List;
 
-public class Site implements DatabaseManagement{
+public abstract class Site implements DatabaseManagement{
     int site_id;
     String  site_name;
 

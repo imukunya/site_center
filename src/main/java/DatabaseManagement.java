@@ -4,6 +4,7 @@ public interface DatabaseManagement {
     void save();
     void delete();
     void update();
+
     void deleteById();
 
 }

@@ -2,8 +2,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mozilla.javascript.json.JsonParser;
-import org.sql2o.*;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import static spark.Spark.*;
@@ -46,6 +44,94 @@ public class App {
             model.put("createdEngineerFormView",true);
             model.put("createdEngineerFeedback",true);
             model.put("engNames",names);
+
+            return new ModelAndView(model,"engineer.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/engineer/edit/:eng_id",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Engineer> engineers = Engineer.all();
+            model.put("engineers",engineers);
+            String eng_id = req.params("eng_id");
+            Engineer engineer = Engineer.findById(Integer.parseInt(eng_id));
+            model.put("editEngineer",engineer);
+
+
+            model.put("createdEngineerFormView",false);
+            model.put("createdEngineerFeedback",false);
+
+            model.put("editEngineerFormView",true);
+            model.put("editEngineerFeedback",false);
+
+
+
+
+            return new ModelAndView(model,"engineer.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/engineer/update",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Engineer> engineers = Engineer.all();
+            model.put("engineers",engineers);
+            String names = req.queryParams("engineerNames");
+            int eng_id = Integer.parseInt(req.queryParams("eng_id"));
+            System.out.print(eng_id);
+            Engineer engineer  =Engineer.findById(eng_id);
+            engineer.setEng_names(names);
+            engineer.setEng_id(eng_id);
+            engineer.update();
+
+
+            model.put("createdEngineerFormView",false);
+            model.put("createdEngineerFeedback",false);
+
+            model.put("editEngineerFormView",true);
+            model.put("editEngineerFeedback",true);
+
+            return new ModelAndView(model,"engineer.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/engineer/delete/:eng_id",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Engineer> engineers = Engineer.all();
+            model.put("engineers",engineers);
+            int eng_id = Integer.parseInt(req.params("eng_id"));
+            System.out.print(eng_id);
+            Engineer deleteEngineer  =Engineer.findById(eng_id);
+            model.put("deleteEngineer",deleteEngineer);
+
+
+
+            model.put("createdEngineerFormView",false);
+            model.put("createdEngineerFeedback",false);
+
+            model.put("editEngineerFormView",false);
+            model.put("editEngineerFeedback",false);
+            model.put("deleteEngineerConfirm",true);
+
+            return new ModelAndView(model,"engineer.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        post("/engineer/delete",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Engineer> engineers = Engineer.all();
+            model.put("engineers",engineers);
+            int eng_id = Integer.parseInt(req.queryParams("eng_id"));
+            System.out.print(eng_id);
+            Engineer deleteEngineer  =Engineer.findById(eng_id);
+            deleteEngineer.delete();
+
+
+
+            model.put("createdEngineerFormView",false);
+            model.put("createdEngineerFeedback",false);
+
+            model.put("editEngineerFormView",false);
+            model.put("editEngineerFeedback",false);
+            model.put("deleteEngineerConfirm",false);
+
+            model.put("deleteEngineerFeedback",true);
+            model.put("deleteEngineerFeedbackMSG","Engineer deleted");
 
             return new ModelAndView(model,"engineer.hbs");
         }, new HandlebarsTemplateEngine());
