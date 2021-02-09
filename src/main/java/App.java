@@ -185,6 +185,81 @@ public class App {
             return new ModelAndView(model,"site.hbs");
         }, new HandlebarsTemplateEngine());
 
+        //edit
+        post("/site/edit/:id",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Site> sites = Site.all();
+            model.put("sites",sites);
+
+            List<Engineer> engineers = Engineer.all();
+            model.put("siteEngineers",engineers);
+
+
+
+
+
+
+
+            model.put("editSiteFormView",true);
+            model.put("createdSiteFeedback",false);
+
+
+            return new ModelAndView(model,"site.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        get("/site/delete/:id",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Site> sites = Site.all();
+            model.put("sites",sites);
+            String siteID = req.params("id");
+
+            List<Engineer> engineers = Engineer.all();
+            model.put("siteEngineers",engineers);
+
+            Site s = Site.findById(Integer.parseInt(siteID));
+            model.put("deleteSite",s);
+
+
+
+
+
+
+            model.put("editSiteFormView",false);
+            model.put("createdSiteFeedback",false);
+            model.put("deleteSiteConfirm",true);
+
+
+            return new ModelAndView(model,"site.hbs");
+        }, new HandlebarsTemplateEngine());
+
+
+        post("/site/delete",(req,res) -> {
+            Map<String,Object> model  = new HashMap<>();
+            List<Site> sites = Site.all();
+            model.put("sites",sites);
+            String siteID = req.queryParams("site_id");
+
+            List<Engineer> engineers = Engineer.all();
+            model.put("siteEngineers",engineers);
+
+            Site s = Site.findById(Integer.parseInt(siteID));
+            model.put("deleteSite",s);
+
+
+
+
+
+
+            model.put("editSiteFormView",false);
+            model.put("createdSiteFeedback",false);
+            model.put("deleteSiteFeedback",true);
+            model.put("deleteSiteFeedbackMSG","Site Deleted");
+
+
+
+            return new ModelAndView(model,"site.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
     }
 }

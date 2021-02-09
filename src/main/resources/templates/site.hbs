@@ -14,11 +14,18 @@
                                     <a href="/site/edit/{{site_id}}">Edit</a> | <a href="/site/delete/{{site_id}}">Delete</a>
 
                                 </td>
+                                <td>
+                                    {{site_location}}
+                                </td>
 
 
 
                                 <!--                                -->
                             </tr>
+<!--                            -->
+
+
+
                             </tbody>
                         </table>
                     </div>
@@ -64,7 +71,7 @@
 
 
 
-                        <button type="submit" class="btn btn-primary">Add Engineer</button>
+                        <button type="submit" class="btn btn-primary">Add Site</button>
 
                     </form>
                     <div class="" id="user-feeback">
@@ -78,19 +85,31 @@
                     </div>
                 {{/if}}
 
-                {{#if editEngineerFormView}}
-                    <form action="/engineer/update" method="post">
+                {{#if editSiteFormView}}
+                    <form action="/site/edit/save" method="post">
                         <div class="mb-3">
-                            <label for="engineerNames" class="form-label">Engineer Names</label>
-                            <input type="text" class="form-control" name="engineerNames" id="engineerNames" value="{{editEngineer.eng_names}}" aria-describedby="Engineer Names">
-                            <input type="text" readonly class="form-control" name="eng_id" value="{{editEngineer.eng_id}}">
-                            <div id="emailHelp" class="form-text">Please add an Engineer.</div>
+                            <label for="siteNames" class="form-label">Site Names</label>
+                            <input type="text" value="{{editSite.site_name}}" class="form-control" name="siteNames" id="siteNames" aria-describedby="Site Name">
+                            <div id="emailHelp" class="form-text">Please add an Site Name.</div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="siteLocation" class="form-label">Site Location</label>
+                            <input type="text" value="{{editSite.site_location}}" class="form-control" name="siteLocation" id="siteLocation" aria-describedby="Site Location">
+                            <div id="emailHelp" class="form-text">Please add an Site location.</div>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="siteNotes" class="form-label">Site Notes</label>
+                            <textarea class="form-control" name="siteNotes" id="siteNotes" aria-describedby="Site Notes"></textarea>
+                            <div id="emailHelp" class="form-text">Please add Site notes.</div>
 
                         </div>
 
 
-
-                        <button type="submit" class="btn btn-success">Update Engineer</button>
+                        <button type="submit" class="btn btn-primary">Update Site</button>
 
                     </form>
                     <div class="" id="user-feeback">
@@ -104,18 +123,18 @@
                     </div>
                 {{/if}}
 
-                {{#if deleteEngineerConfirm}}
+                {{#if deleteSiteConfirm}}
                 <div class="modal" id="myModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content" id="myModal">
                             <div class="modal-header">
-                                <h5 class="modal-title">Delete Engineer</h5>
+                                <h5 class="modal-title">Delete Site</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="/engineer/delete" method="post">
+                            <form action="/site/delete" method="post">
                                 <div class="modal-body">
-                                    <p>delete:{{deleteEngineer.eng_names}} ?</p>
-                                    <input type="hidden" name="eng_id" value="{{deleteEngineer.eng_id}}" />
+                                    <p>delete:{{s.site_name}} ?</p>
+                                    <input type="hidden" name="site_id" value="{{s.site_id}}" />
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -132,18 +151,18 @@
                         </script>
                 {{/if}}
 
-                {{#if deleteEngineerFeedback}}
+                {{#if deleteSiteFeedback}}
                 <div class="modal" id="myModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content" id="myModal">
                             <div class="modal-header">
-                                <h5 class="modal-title">Delete Engineer</h5>
+                                <h5 class="modal-title">Delete Site</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
                             <div class="modal-body">
 
-                                {{deleteEngineerFeedbackMSG}}
+                                {{deleteSiteFeedbackMSG}}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
